@@ -16,9 +16,31 @@ public class CustomerDAO implements DAO<Customer> {
 		con = SqlConnection.getOracleConnection();
 	}
 
+	public CustomerDAO(Connection con) {
+		super();
+		this.con = con;
+	}
+
 	@Override
 	public int add(Customer t) {
-		// TODO Auto-generated method stub
+
+		String sql = "insert into customer values(?,?,?,?)";
+		int rowAdded = 0;
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, t.getCustomerId());
+			pstmt.setString(2, t.getCustomerName());
+			pstmt.setString(3, t.getEmail_Id());
+			pstmt.setLong(4, t.getHandPhone());
+			rowAdded = pstmt.executeUpdate();
+		}
+
+		catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 		return 0;
 	}
 

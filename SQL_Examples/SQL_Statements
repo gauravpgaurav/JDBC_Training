@@ -1,0 +1,7 @@
+CREATE table "CUSTOMER" (
+    "CUSTOMERID"    NUMBER(5) NOT NULL,
+    "CUSTOMERNAME"  VARCHAR2(30),
+    "CUSTOMEREMAIL" CHAR(30),
+    "HANDPHONE"     NUMBER(10),
+    constraint  "CUSTOMER_PK" primary key ("CUSTOMERID")
+);

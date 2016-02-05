@@ -35,6 +35,8 @@ public class CustomerDAO implements DAO<Customer> {
 			pstmt.setString(3, t.getEmail_Id());
 			pstmt.setLong(4, t.getHandPhone());
 			rowAdded = pstmt.executeUpdate();
+
+			System.out.println("Row Added !");
 		}
 
 		catch (SQLException e) {
@@ -45,14 +47,50 @@ public class CustomerDAO implements DAO<Customer> {
 	}
 
 	@Override
-	public Customer find() {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer find(int key) {
+
+		String sql = "select * from customer where customerid =?";
+		Customer resultCustomer = null;
+		
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			ResultSet rs = pstmt.executeQuery();
+			
+			
+			while (rs.next()) {
+				int customerId = rs.getInt("customerid");
+				String cutomerName = rs.getString("customername"); 
+				String email_Id = rs.getString("customeremail");
+				Long handPhone = rs.getLong("handphone");
+				resultCustomer = new Customer(customerId, cutomerName, email_Id, handPhone);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return resultCustomer;
 	}
 
 	@Override
 	public List<Customer> findAll() {
-		// TODO Auto-generated method stub
+
+		String sql = "select * from customer";
+
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				System.out.println(rs.getInt("customerid") + "\t" + rs.getString("customername") + "\t"
+						+ rs.getString("customeremail") + "\t" + rs.getLong("handphone"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 

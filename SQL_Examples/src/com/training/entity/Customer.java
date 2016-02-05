@@ -55,12 +55,18 @@ public class Customer {
 
 	}
 
-	public String showCustomer() {
-
-		String custDetails = customerId + " : " + customerName + " : " + email_Id + " : " + handPhone;
-
-		return custDetails;
-
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", email_Id=" + email_Id
+				+ ", handPhone=" + handPhone + "]";
 	}
+
+//	public String showCustomer() {
+//
+//		String custDetails = customerId + " : " + customerName + " : " + email_Id + " : " + handPhone;
+//
+//		return custDetails;
+//
+//	}
 
 }

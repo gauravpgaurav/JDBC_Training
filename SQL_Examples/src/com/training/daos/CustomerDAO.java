@@ -88,7 +88,6 @@ public class CustomerDAO implements DAO<Customer> {
 				custList.add(tempCustomer);
 				
 			}
-//			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

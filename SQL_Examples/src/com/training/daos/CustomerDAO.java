@@ -39,7 +39,7 @@ public class CustomerDAO implements DAO<Customer> {
 
 		catch (SQLException e) {
 
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return rowAdded;
 	}
@@ -60,8 +60,7 @@ public class CustomerDAO implements DAO<Customer> {
 				resultCustomer = getCustomer(rs);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 		return resultCustomer;
@@ -76,7 +75,7 @@ public class CustomerDAO implements DAO<Customer> {
 					rs.getLong("handphone"));
 
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 		}
 		return cust;
 	}
@@ -86,8 +85,6 @@ public class CustomerDAO implements DAO<Customer> {
 
 		String sql = "select * from customer";
 		ArrayList<Customer> custList = new ArrayList<Customer>();
-		Customer tempCustomer = null;
-
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
@@ -95,26 +92,50 @@ public class CustomerDAO implements DAO<Customer> {
 
 			while (rs.next()) {
 
-				// tempCustomer = new Customer(rs.getInt("customerid"),
-				// rs.getString("customername"),
-				// rs.getString("customeremail"), rs.getLong("handphone"));
-
 				custList.add(getCustomer(rs));
 
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 		return custList;
 	}
 
 	@Override
-	public int update(int key) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(int key, String email) {
+
+		Statement s;
+		int rowUpdated = 0;
+		
+		try {
+			s = (Statement) con.createStatement();
+			rowUpdated = s.executeUpdate("update customer set " + "customeremail='" + email + "' where customerid='" + key + "'");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+		}
+
+		return rowUpdated;
+	}
+
+	@Override
+	public int update(int key, long handPhone) {
+		Statement s;
+		int rowUpdated = 0;
+		
+		try {
+			s = (Statement) con.createStatement();
+			rowUpdated = s.executeUpdate("update customer set " + "handphone='" + handPhone + "' where customerid='" + key + "'");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+		}
+
+		return rowUpdated;
 	}
 
 	@Override
@@ -130,7 +151,7 @@ public class CustomerDAO implements DAO<Customer> {
 
 		catch (SQLException e) {
 
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return rowDeleted;
 	}

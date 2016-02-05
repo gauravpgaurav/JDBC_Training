@@ -1,6 +1,6 @@
 package com.training.daos;
 
-import java.util.List;
+import java.util.*;
 import java.sql.*;
 
 import com.training.entity.Customer;
@@ -34,16 +34,14 @@ public class CustomerDAO implements DAO<Customer> {
 			pstmt.setString(2, t.getCustomerName());
 			pstmt.setString(3, t.getEmail_Id());
 			pstmt.setLong(4, t.getHandPhone());
-			rowAdded = pstmt.executeUpdate();
-
-			System.out.println("Row Added !");
+			rowAdded = pstmt.executeUpdate();		
 		}
 
 		catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		return 0;
+		return rowAdded;
 	}
 
 	@Override
@@ -77,21 +75,27 @@ public class CustomerDAO implements DAO<Customer> {
 	public List<Customer> findAll() {
 
 		String sql = "select * from customer";
-
-		Statement stmt;
+		ArrayList<Customer> custList = new ArrayList<Customer>();
+		Customer tempCustomer = null;
+		
+		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				System.out.println(rs.getInt("customerid") + "\t" + rs.getString("customername") + "\t"
-						+ rs.getString("customeremail") + "\t" + rs.getLong("handphone"));
+				
+				tempCustomer = new Customer(rs.getInt("customerid"), rs.getString("customername"), rs.getString("customeremail"), rs.getLong("handphone"));
+				custList.add(tempCustomer);
+				
 			}
+//			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return null;
+		return custList;
 	}
 
 	@Override

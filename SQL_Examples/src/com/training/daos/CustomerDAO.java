@@ -34,7 +34,7 @@ public class CustomerDAO implements DAO<Customer> {
 			pstmt.setString(2, t.getCustomerName());
 			pstmt.setString(3, t.getEmail_Id());
 			pstmt.setLong(4, t.getHandPhone());
-			rowAdded = pstmt.executeUpdate();		
+			rowAdded = pstmt.executeUpdate();
 		}
 
 		catch (SQLException e) {
@@ -49,19 +49,15 @@ public class CustomerDAO implements DAO<Customer> {
 
 		String sql = "select * from customer where customerid =?";
 		Customer resultCustomer = null;
-		
+
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, key);
 			ResultSet rs = pstmt.executeQuery();
-			
-			
+
 			while (rs.next()) {
-				int customerId = rs.getInt("customerid");
-				String cutomerName = rs.getString("customername"); 
-				String email_Id = rs.getString("customeremail");
-				Long handPhone = rs.getLong("handphone");
-				resultCustomer = new Customer(customerId, cutomerName, email_Id, handPhone);
+
+				resultCustomer = getCustomer(rs);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -71,22 +67,40 @@ public class CustomerDAO implements DAO<Customer> {
 		return resultCustomer;
 	}
 
+	private Customer getCustomer(ResultSet rs) {
+
+		Customer cust = null;
+		try {
+
+			cust = new Customer(rs.getInt("customerid"), rs.getString("customername"), rs.getString("customeremail"),
+					rs.getLong("handphone"));
+
+		} catch (Exception e) {
+
+		}
+		return cust;
+	}
+
 	@Override
 	public List<Customer> findAll() {
 
 		String sql = "select * from customer";
 		ArrayList<Customer> custList = new ArrayList<Customer>();
 		Customer tempCustomer = null;
-		
+
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
+
 			while (rs.next()) {
-				
-				tempCustomer = new Customer(rs.getInt("customerid"), rs.getString("customername"), rs.getString("customeremail"), rs.getLong("handphone"));
-				custList.add(tempCustomer);
-				
+
+				// tempCustomer = new Customer(rs.getInt("customerid"),
+				// rs.getString("customername"),
+				// rs.getString("customeremail"), rs.getLong("handphone"));
+
+				custList.add(getCustomer(rs));
+
 			}
 
 		} catch (SQLException e) {
@@ -105,8 +119,20 @@ public class CustomerDAO implements DAO<Customer> {
 
 	@Override
 	public int delete(int key) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "delete from customer where customerid = " + key;
+		int rowDeleted = 0;
+
+		try {
+
+			Statement stmt = con.createStatement();
+			rowDeleted = stmt.executeUpdate(sql);
+		}
+
+		catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return rowDeleted;
 	}
 
 }

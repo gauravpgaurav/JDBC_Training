@@ -5,3 +5,10 @@ CREATE table "CUSTOMER" (
     "HANDPHONE"     NUMBER(10),
     constraint  "CUSTOMER_PK" primary key ("CUSTOMERID")
 );
+
+
+create or replace procedure updatePhoneNumber ( p_customerId IN number , p_phoneNumber IN number)
+is
+begin
+update customer set handPhone= p_phoneNumber where customerId = p_customerId;
+end;

@@ -7,17 +7,19 @@ import java.util.*;
 
 public class CheckUserApplication {
 
-	public static void main(String[] args){
-		
+	public static void main(String[] args) {
+
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter UserName :\t");
 		String userName = sc.next();
 		System.out.print("Enter Password :\t");
 		String passWord = sc.next();
-		
-		User userIns = new User(userName,passWord);
-		
+		sc.close();
+
+		User userIns = new User(userName, passWord);
+
 		ValidateUser validateIns = new ValidateUser();
-		System.out.println("Logged In :\t\t"+validateIns.validate(userIns));
+		System.out.println("Logged In :\t\t" + validateIns.validate(userIns));
+
 	}
 }

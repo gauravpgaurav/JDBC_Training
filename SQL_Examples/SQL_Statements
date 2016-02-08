@@ -12,3 +12,9 @@ is
 begin
 update customer set handPhone= p_phoneNumber where customerId = p_customerId;
 end;
+
+Executing-
+
+begin 
+updatePhoneNumber(101,787878);
+end;

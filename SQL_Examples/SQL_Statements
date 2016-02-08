@@ -27,3 +27,12 @@ update customer set handPhone= p_phoneNumber where customerId = p_customerId;
 update_count:= SQL%ROWCOUNT;
 DBMS_OUTPUT.PUT_LINE(update_count);
 end;
+
+-----------------------------------------------
+
+CREATE table "VERIFYUSER" (
+    "userName"    VARCHAR2(16) NOT NULL,
+    "passWord"  VARCHAR2(16) NOT NULL,
+    "roll" VARCHAR2(20),
+    constraint  "VERIFYUSER_PK" primary key ("userName")
+);

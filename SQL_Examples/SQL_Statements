@@ -18,3 +18,12 @@ Executing-
 begin 
 updatePhoneNumber(101,787878);
 end;
+
+
+create or replace procedure updatePhoneNumber ( p_customerId IN number , p_phoneNumber IN number, update_count OUT number)
+is
+begin
+update customer set handPhone= p_phoneNumber where customerId = p_customerId;
+update_count:= SQL%ROWCOUNT;
+DBMS_OUTPUT.PUT_LINE(update_count);
+end;

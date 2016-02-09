@@ -10,13 +10,20 @@ import com.training.utils.SqlConnection;
 public class CustomerDAO implements DAO<Customer> {
 
 	private Connection con;
+	private String tableName;
 
 	public CustomerDAO() {
 		super();
 		con = SqlConnection.getOracleConnection();
 	}
 
-	public CustomerDAO(Connection con) {
+	public CustomerDAO(String tableName) {
+		super();
+		this.tableName = tableName;
+		con = SqlConnection.getOracleConnection();
+	}
+
+	public CustomerDAO(Connection con, String tableName) {
 		super();
 		this.con = con;
 	}
@@ -24,7 +31,7 @@ public class CustomerDAO implements DAO<Customer> {
 	@Override
 	public int add(Customer t) {
 
-		String sql = "insert into customer values(?,?,?,?)";
+		String sql = "insert into " + tableName + " values(?,?,?,?)";
 		int rowAdded = 0;
 
 		try {
@@ -47,7 +54,7 @@ public class CustomerDAO implements DAO<Customer> {
 	@Override
 	public Customer find(int key) {
 
-		String sql = "select * from customer where customerid =?";
+		String sql = "select * from " + tableName + " where customerid =?";
 		Customer resultCustomer = null;
 
 		try {
@@ -83,7 +90,7 @@ public class CustomerDAO implements DAO<Customer> {
 	@Override
 	public List<Customer> findAll() {
 
-		String sql = "select * from customer";
+		String sql = "select * from " + tableName;
 		ArrayList<Customer> custList = new ArrayList<Customer>();
 		Statement stmt = null;
 		try {
@@ -108,10 +115,11 @@ public class CustomerDAO implements DAO<Customer> {
 
 		Statement s;
 		int rowUpdated = 0;
-		
+
 		try {
 			s = (Statement) con.createStatement();
-			rowUpdated = s.executeUpdate("update customer set " + "customeremail='" + email + "' where customerid='" + key + "'");
+			rowUpdated = s.executeUpdate(
+					"update " + tableName + " set " + "customeremail='" + email + "' where customerid='" + key + "'");
 
 		} catch (SQLException e) {
 
@@ -125,10 +133,11 @@ public class CustomerDAO implements DAO<Customer> {
 	public int update(int key, long handPhone) {
 		Statement s;
 		int rowUpdated = 0;
-		
+
 		try {
 			s = (Statement) con.createStatement();
-			rowUpdated = s.executeUpdate("update customer set " + "handphone='" + handPhone + "' where customerid='" + key + "'");
+			rowUpdated = s.executeUpdate(
+					"update " + tableName + " set " + "handphone='" + handPhone + "' where customerid='" + key + "'");
 
 		} catch (SQLException e) {
 
@@ -140,7 +149,7 @@ public class CustomerDAO implements DAO<Customer> {
 
 	@Override
 	public int delete(int key) {
-		String sql = "delete from customer where customerid = " + key;
+		String sql = "delete from " + tableName + " where customerid = " + key;
 		int rowDeleted = 0;
 
 		try {

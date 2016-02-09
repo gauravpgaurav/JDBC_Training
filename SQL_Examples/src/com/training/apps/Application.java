@@ -15,7 +15,7 @@ public class Application {
 		Scanner sc = new Scanner(System.in);
 
 		Customer cust = new Customer(112, "Das", "das@sapient.com", 23232237);
-		CustomerDAO dao = new CustomerDAO();
+		CustomerDAO dao = new CustomerDAO("customer");
 
 		System.out.println();
 

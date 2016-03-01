@@ -13,6 +13,8 @@ public class SqlConnection {
 		try {
 
 			Properties prop = new Properties();
+//			InputStream inStream = Thread.currentThread().getContextClassLoader()
+//					.getResourceAsStream("DbConnection.properties");
 			FileInputStream inStream = new FileInputStream(new File("DbConnection.properties"));
 			prop.load(inStream);
 
